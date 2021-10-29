@@ -19,10 +19,11 @@ import {
   ToolbarSearch,
 } from "carbon-components-react";
 const Form = () => {
-  const [poid, setPoid] = useState(0);
-  const [poNo, setPoNo] = useState(0);
+  const [poid, setPoid] = useState<any>();
+  const [poNo, setPoNo] = useState<any>();
 
   const [date, setDate] = useState(0);
+  const [show, setShow] = useState(false);
 
   const [program, setProgram] = useState<any>("");
 
@@ -91,7 +92,15 @@ const Form = () => {
   //     };
   //     // eslint-disable-next-line react-hooks/exhaustive-deps
   //   }, [window.innerHeight, window.innerWidth]);
-
+  useEffect(() => {
+    console.log("vendor", vendor);
+  }, []);
+  const handlePoid = (event: any) => {
+    setPoid(event.target.value);
+  };
+  const handlePono = (event: any) => {
+    setPoNo(event.target.value);
+  };
   return (
     <div>
       <div className="outerForm">
@@ -104,6 +113,8 @@ const Form = () => {
               invalidText="A valid value is required"
               labelText="PO ID"
               placeholder="Placeholder text"
+              onChange={(e) => handlePoid(e)}
+              value={poid}
             />
           </div>
           <div className="textBox">
@@ -112,6 +123,8 @@ const Form = () => {
               invalidText="A valid value is required"
               labelText="PO Number"
               placeholder="Placeholder text"
+              onChange={(e) => handlePono(e)}
+              value={poNo}
             />
           </div>
           <div className="textBox">
@@ -136,9 +149,9 @@ const Form = () => {
                 "Program 7",
                 "Program 8",
               ]}
-              itemToString={(item) => (item ? item.text : "")}
-              onChange={({ selectedItem }) => setProgram(selectedItem)}
-              selectedItem={program}
+              // itemToString={(item) => (item ? item.text : "")}
+              // onChange={({ selectedItem }) => setProgram(selectedItem)}
+              // selectedItem={program}
               label="Program"
               titleText="Enter your Program name"
             />
@@ -161,56 +174,76 @@ const Form = () => {
                 "Vendor 11",
                 "Vendor 12",
               ]}
-              itemToString={(item) => (item ? item.text : "")}
+              // itemToString={(item) => (item ? item.text : "")}
               onChange={({ selectedItem }) => setVendor(selectedItem)}
-              selectedItem={vendor}
+              // selectedItem={vendor}
               label="Vendor"
               titleText="Enter your Vendor name"
             />
           </div>
         </div>
         <div className="button">
-          <Button className="button-inner" kind={"tertiary"}>
+          <Button
+            onClick={() => {
+              setDate(0);
+              setPoNo(0);
+              setPoid(0);
+              setProgram("");
+              setVendor("");
+              setShow(false);
+            }}
+            className="button-inner"
+            kind={"tertiary"}
+          >
             Reset
           </Button>
-          <Button className="button-inner">Create PO</Button>
+          <Button
+            onClick={() => {
+              setShow(true);
+            }}
+            className="button-inner"
+          >
+            Create PO
+          </Button>
         </div>
       </div>
-      <div className="search-container">
-        <div className="search">
-          <Search labelText="Search" id="search-1" placeHolderText="Search" />{" "}
-        </div>
-        <div>
-          <DataTable
-            rows={rows}
-            headers={headers}
-            render={({ rows, headers, getHeaderProps }) => (
-              <TableContainer title="DataTable">
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      {headers.map((header) => (
-                        <TableHeader {...getHeaderProps({ header })}>
-                          {header.header}
-                        </TableHeader>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row) => (
-                      <TableRow key={row.id}>
-                        {row.cells.map((cell) => (
-                          <TableCell key={cell.id}>{cell.value}</TableCell>
+      {show && (
+        <div className="search-container">
+          <div className="search">
+            <Search labelText="Search" id="search-1" placeHolderText="Search" />{" "}
+          </div>
+          <div className="table-container">
+            <DataTable
+              rows={rows}
+              headers={headers}
+              render={({ rows, headers, getHeaderProps }) => (
+                <TableContainer title="DataTable">
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        {headers.map((header) => (
+                          <TableHeader {...getHeaderProps({ header })}>
+                            {header.header}
+                          </TableHeader>
                         ))}
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          />
+                    </TableHead>
+                    <TableBody>
+                      {rows.map((row) => (
+                        <TableRow key={row.id}>
+                          {row.cells.map((cell) => (
+                            <TableCell key={cell.id}>{cell.value}</TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              )}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

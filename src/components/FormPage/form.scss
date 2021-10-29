@@ -33,10 +33,44 @@
 .search {
   display: flex;
   justify-content: center;
-  width: 200px;
+  width: 500px;
 }
 .search-container {
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
+}
+.bx--text-input {
+  border: 1px solid #c0c0c0 !important;
+}
+.bx--date-picker__input {
+  border: 1px solid #c0c0c0 !important;
+}
+.bx--list-box__field {
+  border: 1px solid #c0c0c0 !important;
+}
+.table-container {
+  width: 100%;
+  margin: 20px;
+  padding: 20px;
+}
+.bx--data-table-header {
+  background: #ffffff !important;
+}
+.bx--data-table tbody {
+  background: #ffffff !important;
+}
+.bx--data-table td,
+.bx--data-table tbody th {
+  background: #ffffff !important;
+}
+.bx--btn--primary:hover {
+  background-color: #22599c !important;
+  opacity: 80% !important;
+}
+.bx--btn--primary {
+  text-align: center;
+  background-color: #22599c !important;
+  color: #ffffff;
 }
